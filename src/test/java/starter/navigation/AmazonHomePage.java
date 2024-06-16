@@ -22,9 +22,6 @@ public class AmazonHomePage extends PageObject {
     @FindBy(xpath="//div[@id='search']/div/div/div/span/div/div/div/span/div/div/span")
     WebElementFacade resultsHeader;
 
-//    @FindBy(xpath="//*[@id=\"search\"]/div[1]/div[1]/div/span[1]/div[1]/div[3]/div/div/div/div/span/div/div/div[2]/div[1]/h2/a/span")
-//    WebElementFacade firstProdDescription;
-
     @FindBy(css = "[data-cy='title-recipe']")
     List<WebElementFacade> prodDescriptions;
 
