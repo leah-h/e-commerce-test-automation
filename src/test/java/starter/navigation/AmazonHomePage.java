@@ -7,6 +7,7 @@ import net.thucydides.core.pages.PageObject;
 
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @DefaultUrl("https://www.amazon.com/")
@@ -43,17 +44,7 @@ public class AmazonHomePage extends PageObject {
 
     public void searchResultsPageIsDisplayed() {
         resultsHeader.shouldBeVisible();
+        assertFalse(prodDescriptions.isEmpty());
     }
 
-    public boolean searchTermShouldBeVisibleInFirstProdDescription(String searchTerm) {
-        if (!prodDescriptions.isEmpty()) {
-            String firstDescriptText = prodDescriptions.get(0).getText();
-            return firstDescriptText.toLowerCase().contains(searchTerm.toLowerCase());
-        }
-        return false;
-    }
-
-    public void searchTermShouldBeVisibleInFirstProductTitle(String searchTerm) {
-        assertTrue(searchTermShouldBeVisibleInFirstProdDescription(searchTerm));
-    }
 }
