@@ -25,6 +25,5 @@ public class AmazonHomePageStepDefinitions {
     @Then("^the search results page is displayed with (.*)$")
     public void searchResultsPageIsDisplayed(String searchTerm) {
         amazonHomePage.searchResultsPageIsDisplayed();
-//        amazonHomePage.searchTermShouldBeVisibleInFirstProductTitle(searchTerm);
     }
 }
