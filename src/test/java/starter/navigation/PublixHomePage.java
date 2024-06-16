@@ -4,8 +4,10 @@ import net.serenitybdd.annotations.DefaultUrl;
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.NoAlertPresentException;
 
-import java.util.List;
+import static org.junit.Assert.assertTrue;
 
 @DefaultUrl("https://www.publix.com/")
 public class PublixHomePage extends PageObject {
@@ -25,8 +27,11 @@ public class PublixHomePage extends PageObject {
     @FindBy(css = "[data-qa-automation='product-card-header']")
     private WebElementFacade productCardHeader;
 
-    @FindBy(css = "[data-qa-automation='prod-title']")
-    private List<WebElementFacade> productTitles;
+    @FindBy(css =".p-grid-item:nth-child(1) .title-wrapper > .p-text")
+    private WebElementFacade firstProductTitle;
+
+    @FindBy(css = ".p-store-locator")
+    private WebElementFacade storeLocatorPopup;
 
     public void navigatetoPublixPage() {
         open();
@@ -43,16 +48,26 @@ public class PublixHomePage extends PageObject {
         searchBox.submit();
     }
 
-    public boolean isFirstTitleContainsKeyword(String keyword) {
-        if (!productTitles.isEmpty()) {
-            String firstTitleText = productTitles.get(0).getText();
-            return firstTitleText.contains(keyword);
+    public void dismissStoreLocatorPopupIfVisible() throws NoAlertPresentException {
+        if (storeLocatorPopup.isVisible()) {
+            // Switch to the alert
+            Alert alert = getDriver().switchTo().alert();
+
+            // Dismiss the alert
+            alert.dismiss();
         }
-        return false;
     }
+
 
     public void searchResultsPageIsDisplayed() {
         productCardHeader.shouldBeVisible();
+    }
+
+
+    public void keywordShouldBeVisibleInFirstProductTitle(String keyword) {
+        dismissStoreLocatorPopupIfVisible();
+       assertTrue(firstProductTitle.getText().toLowerCase().contains(keyword.toLowerCase()));
+
     }
 
 }

@@ -3,11 +3,19 @@ package starter.stepdefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import net.serenitybdd.annotations.Managed;
+import org.openqa.selenium.WebDriver;
 import starter.navigation.PublixHomePage;
 
-public class HomePageStepDefinitions {
+import static org.junit.Assert.assertTrue;
+
+public class PublixHomePageStepDefinitions {
 
     PublixHomePage publixHomePage;
+
+    @Managed
+    WebDriver driver;
+
 
     @Given("^user is on the Publix landing page$")
     public void navigateToHome() {
@@ -24,8 +32,11 @@ public class HomePageStepDefinitions {
         publixHomePage.searchFor(keyword);
     }
 
-    @When("^the search results page is displayed$")
-    public void searchResultsPageIsDisplayed() {
+    @When("^the search results page is displayed with (.*)$")
+    public void searchResultsPageIsDisplayed(String keyword) {
         publixHomePage.searchResultsPageIsDisplayed();
+        publixHomePage.keywordShouldBeVisibleInFirstProductTitle(keyword);
     }
+
+
 }
